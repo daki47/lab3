@@ -1,0 +1,83 @@
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+
+class worker
+{
+    char firstname[30];
+    char lastname[30];
+    int salary;
+public:
+    worker(char firstname[30]="NoName" , char lastname[30]="NoSurname" , int salary=0)
+    {
+        strcpy(this->firstname, firstname);
+        strcpy(this->lastname, lastname);
+        this->salary=salary;
+    }
+    int getSalary()
+    {
+        return salary;
+    }
+
+    void print()
+    {
+        cout<<firstname<<" "<<lastname<<" "<<salary<<endl;
+    }
+};
+
+class factory
+{
+    worker workers[100];
+    int number_of_workers;
+public:
+    void printworkers(){
+        for(int i=0;i<number_of_workers;i++){
+              workers[i].print();
+        }
+    }
+    void printwithsalary(int salary){
+        for(int i=0;i<number_of_workers;i++){
+            if(workers[i].getSalary()>=salary)
+             workers[i].print();
+        }
+    }
+
+    int i=0;
+    void setd(worker w=worker())
+    {
+        workers[i++]=w;
+    }
+    void setn(int n)
+    {
+        number_of_workers=n;
+    }
+};
+
+int main()
+{
+    int n;
+    cin>>n;
+    factory f;
+    worker* workers=(worker*)malloc(sizeof(worker)* n);
+    char firstname[30];
+    char lastname[30];
+    int salary,i;
+
+    f.setn(n);
+    for( i=0;i<n;i++)
+    {
+        cin>>firstname>>lastname>>salary;
+        f.setd(worker(firstname,lastname,salary));
+    }
+    int min1;
+    cin>>min1;
+    cout<<"ALL WORKERS:"<<endl;
+        f.printworkers();
+    cout<<"EMPLOYEES WITH SALARY "<<min1<<":"<<endl;
+       f.printwithsalary(min1);
+
+
+    return 0;
+}
