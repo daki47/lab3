@@ -1,0 +1,76 @@
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+// your code here
+class Table
+{
+    int width;
+    int length;
+public:
+    Table(int w=0, int l=0)
+    {
+        this->width=w;;
+        this->length=l;
+    }
+    void print()
+    {
+     cout<<"Table: "<<width<<" "<<length<<endl;
+    }
+};
+
+class Room
+{
+    Table t;
+    int rl,rw;
+public:
+    Room(int rw=0, int rl=0 ,Table t=Table())
+    {
+        this->rw=rw;
+        this->rl=rl;
+        this->t=t;
+    }
+    void print()
+    {
+      cout<<"Room: "<<rw<<" "<<rl<<" ";
+      t.print();
+    }
+};
+
+class House
+{
+    Room r;
+    char adress[50];
+public:
+    House(Room r=Room(), char adress[50]="noname")
+    {
+        this->r=r;
+        strcpy(this->adress,adress);
+    }
+    void print()
+    {
+        cout<<"Address: "<<adress<<" ";
+        r.print();
+    }
+
+};
+int main(){
+    int n;
+    cin>>n;
+    for(int i=0;i<n;i++){
+    	int tableWidth, tableHeight;
+        cin>>tableWidth;
+        cin>>tableHeight;
+    	Table t(tableWidth, tableHeight);
+    	int rw, rl;
+        cin>>rw;
+        cin>>rl;
+    	Room r(rw, rl, t);
+    	char adresa[30];
+        cin>>adresa;
+    	House h(r,adresa);
+    	h.print();
+	}
+
+    return 0;
+}
