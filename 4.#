@@ -1,0 +1,134 @@
+#include<iostream>
+#include<cstring>
+
+using namespace std;
+
+enum Color{RED,GREEN,BLUE};
+
+class Shape
+{
+    Color color;
+    char id[5];
+    double area;
+public:
+    Shape(char id[5],Color color, double area){
+        strcpy(this->id,id);
+        this->color=color;
+        this->area=area;
+    }
+    Shape(const Shape & other){
+        strcpy(this->id,other.id);
+        this->color=other.color;
+        this->area=other.area;
+    }
+    char setid(char id[5]){
+        strcpy(this->id,id);
+    }
+    double setarea(double area){
+        this->area=area;
+    }
+    Color setcolor(Color color){
+        this->color=color;
+    }
+    char getid(){
+        return id[5];
+    }
+    char *getcolor(){
+        if(color==0)
+            return "RED";
+        else if(color==1)
+            return "GREEN";
+        else
+            return "BLUE";
+    }
+    double getarea(){
+        return area;
+    }
+
+    void draw(){
+        cout<<id<<" "<<getcolor()<<" "<<area<<endl;
+    }
+};
+class Canvas
+{
+    int n=100;
+    Shape* shapes=(Shape*)malloc(sizeof(Shape)*n);
+int    i=0;
+public:
+    void setn(int n){this->n=n;}
+    void addShape(Shape s)
+    {
+        this->shapes[i++]=s;
+    }
+    void drawAll()
+    {
+        for(int i=0;i<n;i++)
+        shapes[i].draw();
+    }
+ void drawOnly()
+   {
+       for(int i=0;i<n;i++)
+       {
+       if(shapes[i].getcolor()=="RED")
+          shapes[i].draw();
+       }
+   }
+   double totalArea() // method that will return the total area of all shapes in the canvas
+   {
+       double sum=0;
+       for(int i=0;i<n;i++)
+        sum+=shapes[i].getarea();
+      return sum;
+   }
+   double getHalfCanvas()
+   {
+       double sum=0;
+       for(int i=0;i<n;i++)
+        sum+=shapes[i].getarea();
+     return sum/2;
+   }
+};
+
+
+
+int main () {
+
+	int n;
+	cin>>n;
+	cout<<"ADITION OF SHAPES IN THE CANVAS"<<endl;
+	Canvas canvas;
+	canvas.setn(n);
+
+	for (int i=0;i<n;i++) {
+		char id [5];
+		int color;
+		double area;
+
+		cin>>id>>color>>area;
+		Shape s (id, (Color) color, area);
+		canvas.addShape(s);
+	}
+
+	cout<<"TESTING DRAW ALL"<<endl;
+
+	canvas.drawAll();
+
+	cout<<"TESTING DRAW RED SHAPES"<<endl;
+
+	canvas.drawOnly();
+
+	cout<<"TESTING TOTAL AREA"<<endl;
+
+	cout<<canvas.totalArea()<<endl;
+
+	cout<<"TESTING HALF CANVAS"<<endl;
+	double reducedCanvas = canvas.getHalfCanvas();
+
+	cout<<canvas.totalArea()<<" "<<reducedCanvas<<endl;
+
+	if (reducedCanvas == canvas.totalArea()) {
+		cout<<"DO NOT CHANGE THE AREA OF THE OBJECT IN THE CURRENT CANVAS. JUST IN THE NEW CANVAS"<<endl;
+	}
+
+	return 0;
+}
