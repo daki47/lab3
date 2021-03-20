@@ -1,0 +1,71 @@
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+class Potpisuvac
+{
+	char ime[20];
+	char prezime[20];
+	long long embg;
+	public:
+	Potpisuvac(char ime[20]="n", char prezime[20]="s", long long embg=0)
+	{
+	strcpy(this->ime , ime);
+	strcpy(this->prezime, prezime);
+	this->embg=embg;
+	}
+	long long getembg(){return embg;}
+};
+
+class Dogovor
+{
+    int broj;
+    char kategorija[20];
+    Potpisuvac p[3];
+    int i=0;
+public:
+    Dogovor(int broj=0, char kategorija[20]="N", Potpisuvac q=Potpisuvac())
+    {
+        this->broj=broj;
+        strcpy(this->kategorija,kategorija);
+        this->p[i++]=q;
+    }
+};
+
+  bool proverka(Potpisuvac p , Potpisuvac q, Potpisuvac r)
+    {
+    if(p.getembg()==q.getembg())
+        return true;
+    else if(p.getembg()==r.getembg())
+        return true;
+    else if(q.getembg()==r.getembg())
+        return true;
+    else
+        return false;
+    }
+
+int main()
+{
+    char ime[20], prezime[20], kategorija[20];
+    long long embg;
+    int broj, n;
+    cin >> n;
+    	Potpisuvac p[3];
+    for(int i = 0; i < n; i++){
+    	for(int j=0;j<3;j++)
+        {
+    	cin >> embg >> ime >> prezime;
+        p[j]=Potpisuvac(ime, prezime, embg);
+        }
+    	cin >> broj >> kategorija;
+    	Dogovor d(broj, kategorija, p[0]);
+        cout << "Dogovor " << i+1 << ":" << endl;
+    	if(proverka(p[0],p[1],p[2]) == true)
+    	    cout << "Postojat potpishuvaci so ist EMBG" << endl;
+    	else
+    	    cout << "Ne postojat potpishuvaci so ist EMBG" << endl;
+    }
+
+    return 0;
+}
